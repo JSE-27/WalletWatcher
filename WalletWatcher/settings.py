@@ -24,7 +24,7 @@ SECRET_KEY = 'django-insecure-=toz_rxzot68hixk4j4r9y-%lvc!ea=*kzt35h70awcyy2*%gy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = []
 CORS_ALLOW_ALL_ORIGINS = True
 
 # Application definition
@@ -49,7 +49,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'WalletWatcher.handler.CustomMiddleMiddleware'
+    'WalletWatcher.handler.CustomMiddleMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 REST_FRAMEWORK = {
