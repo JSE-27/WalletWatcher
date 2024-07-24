@@ -31,16 +31,18 @@ class DummyTransaction(APIView):
         tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
         trx = web3.eth.wait_for_transaction_receipt(tx_hash)
         tx_details = {
-            "block": trx.get("block_num"),
+            "block": trx.get("blockNumber"),
+            "block_hash": str(trx.get('blockHash').hex()),
+            "transaction_index": str(trx.get('transactionIndex')),
             "transaction_hash": str(trx.get('transactionHash').hex()),
             "from": trx.get('from'),
             "to": trx.get('to'),
-            "value": f"{trx.get('value')}",
-            "gas": f"{trx.get('gas')}",
-            "gasPrice": f"{trx.get('gasPrice')}",
-            "input": f"{trx.get('input')}",
-            "raw": f"{trx}",
+            "value": amount_in_wei,
+            "gas": 21000,
+            "contract_address": trx.get('contractAddress'),
+            "gas_used": f"{trx.get('gasUsed')}"
         }
+
         return send_response(data=tx_details, status=ResponseStatus.SUCCESS, message="Dummy Transaction was successful")
 
 

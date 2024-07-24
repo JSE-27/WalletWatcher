@@ -1,4 +1,7 @@
+import json
+
 from django.http import JsonResponse
+from hexbytes import HexBytes
 
 
 class ResponseStatus:
@@ -20,3 +23,13 @@ def send_response(data=None, status=ResponseStatus.UNKNOWN, message="N/A", code=
     }
 
     return JsonResponse(payload, status=code)
+
+
+def sanitize_transaction(tx_details):
+    converted_details = {}
+    for key, value in tx_details.items():
+        if isinstance(value, HexBytes):
+            converted_details[key] = value.hex()
+        else:
+            converted_details[key] = value
+    return converted_details
