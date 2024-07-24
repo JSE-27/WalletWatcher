@@ -30,7 +30,6 @@ class DummyTransaction(APIView):
         signed_txn = web3.eth.account.sign_transaction(transaction, private_key=from_pk)
         tx_hash = web3.eth.send_raw_transaction(signed_txn.rawTransaction)
         trx = web3.eth.wait_for_transaction_receipt(tx_hash)
-        print(trx)
         tx_details = {
             "block": trx.get("block_num"),
             "transaction_hash": str(trx.get('transactionHash').hex()),
@@ -40,6 +39,7 @@ class DummyTransaction(APIView):
             "gas": f"{trx.get('gas')}",
             "gasPrice": f"{trx.get('gasPrice')}",
             "input": f"{trx.get('input')}",
+            "raw": f"{trx}",
         }
         return send_response(data=tx_details, status=ResponseStatus.SUCCESS, message="Dummy Transaction was successful")
 
